@@ -1,0 +1,29 @@
+# Maven
+**/target/
+**/.mvn/
+
+# Java
+*.class
+
+# IntelliJ
+.idea/
+*.iml
+
+# VS Code
+.vscode/
+
+# Node
+node_modules/
+frontend/**/dist/
+
+# Environment / secrets
+.env
+*.env
+
+# Logs
+*.log
+
+# OS
+.DS_Store
+Thumbs.db
+config-repository/
