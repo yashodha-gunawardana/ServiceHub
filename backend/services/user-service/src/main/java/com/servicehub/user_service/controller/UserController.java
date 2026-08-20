@@ -3,6 +3,7 @@ package com.servicehub.user_service.controller;
 import com.servicehub.user_service.entity.User;
 import com.servicehub.user_service.service.UserService;
 import org.springframework.http.HttpStatus;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -33,7 +34,7 @@ public class UserController {
     }
 
     @PostMapping
-    public ResponseEntity<User> createUser(@RequestBody User user) {
+    public ResponseEntity<User> createUser(@Valid @RequestBody User user) {
         User created = userService.createUser(user);
         // 201 Created + Location header pointing to the new resource
         URI location = URI.create("/api/users/" + created.getId());
@@ -43,7 +44,7 @@ public class UserController {
     @PutMapping("/{id}")
     public ResponseEntity<User> updateUser(
             @PathVariable Long id,
-            @RequestBody User user) {
+            @Valid @RequestBody User user) {
 
         return userService.getUserById(id)
                 .map(existing -> ResponseEntity.ok(userService.updateUser(id, user))) // 200 OK

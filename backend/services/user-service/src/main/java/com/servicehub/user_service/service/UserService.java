@@ -2,6 +2,7 @@ package com.servicehub.user_service.service;
 
 import com.servicehub.user_service.entity.User;
 import com.servicehub.user_service.repository.UserRepository;
+import com.servicehub.user_service.exception.DuplicateEmailException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -25,6 +26,10 @@ public class UserService {
     }
 
     public User createUser(User user) {
+        if (userRepository.existsByEmail(user.getEmail())) {
+            throw new DuplicateEmailException(user.getEmail());
+        }
+
         return userRepository.save(user);
     }
 
