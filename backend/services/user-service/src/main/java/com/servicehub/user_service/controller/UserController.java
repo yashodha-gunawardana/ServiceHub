@@ -2,10 +2,13 @@ package com.servicehub.user_service.controller;
 
 import com.servicehub.user_service.entity.User;
 import com.servicehub.user_service.service.UserService;
+import com.servicehub.user_service.dto.LoginResponse;
 import org.springframework.http.HttpStatus;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Optional;
 
 import java.net.URI;
 import java.util.List;
@@ -58,5 +61,30 @@ public class UserController {
         }
         userService.deleteUser(id);
         return ResponseEntity.noContent().build(); // 204 No Content
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<?> login(@RequestBody User user) {
+
+        Optional<User> loggedInUser =
+                userService.login(user.getEmail(), user.getPassword());
+
+        if (loggedInUser.isPresent()) {
+
+            User loggedUser = loggedInUser.get();
+
+            LoginResponse response = new LoginResponse(
+                    loggedUser.getId(),
+                    loggedUser.getName(),
+                    loggedUser.getEmail(),
+                    loggedUser.getRole()
+            );
+
+            return ResponseEntity.ok(response);
+        }
+
+        return ResponseEntity
+                .status(HttpStatus.UNAUTHORIZED)
+                .body("Invalid email or password");
     }
 }
