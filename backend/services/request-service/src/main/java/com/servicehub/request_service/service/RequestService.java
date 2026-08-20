@@ -150,6 +150,11 @@ public class RequestService {
         return true;
     }
 
+    // Get provider details through Feign Client
+    public ProviderResponse getProvider(Long providerId) {
+        return providerClient.getProviderById(providerId);
+    }
+
     // Get requests by customer
     public List<ServiceRequest> getRequestsByCustomerId(
             String customerId) {

@@ -2,6 +2,7 @@ package com.servicehub.request_service.controller;
 
 import com.servicehub.request_service.entity.ServiceRequest;
 import com.servicehub.request_service.service.RequestService;
+import com.servicehub.request_service.dto.ProviderResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -112,6 +113,16 @@ public class RequestController {
         return ResponseEntity.ok(
                 requestService.getRequestsByProviderId(providerId)
         );
+    }
+
+    // GET - Get provider details through Feign Client
+    @GetMapping("/provider-details/{providerId}")
+    public ResponseEntity<ProviderResponse> getProviderDetails(
+            @PathVariable Long providerId) {
+
+        return ResponseEntity.ok(
+                requestService.getProvider(providerId)
+        );  
     }
 
     // GET - Get requests by status
