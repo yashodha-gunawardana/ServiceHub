@@ -6,6 +6,7 @@ import com.servicehub.request_service.dto.ProviderResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import jakarta.validation.Valid;
 
 import java.net.URI;
 import java.util.List;
@@ -48,7 +49,7 @@ public class RequestController {
     // POST - Create new request
     @PostMapping
     public ResponseEntity<ServiceRequest> createRequest(
-            @RequestBody ServiceRequest request) {
+            @Valid @RequestBody ServiceRequest request) {
 
         ServiceRequest createdRequest =
                 requestService.createRequest(request);
@@ -66,7 +67,7 @@ public class RequestController {
     @PutMapping("/{id}")
     public ResponseEntity<ServiceRequest> updateRequest(
             @PathVariable String id,
-            @RequestBody ServiceRequest request) {
+            @Valid @RequestBody ServiceRequest request) {
 
         return requestService.updateRequest(id, request)
                 .map(updatedRequest -> ResponseEntity

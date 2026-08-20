@@ -6,7 +6,7 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 @RestControllerAdvice
@@ -16,9 +16,9 @@ public class GlobalExceptionHandler {
     public ResponseEntity<Map<String, Object>> handleValidationErrors(
             MethodArgumentNotValidException exception) {
 
-        Map<String, Object> response = new HashMap<>();
+        Map<String, Object> response = new LinkedHashMap<>();
 
-        Map<String, String> errors = new HashMap<>();
+        Map<String, String> errors = new LinkedHashMap<>();
 
         exception.getBindingResult()
                 .getFieldErrors()
@@ -42,7 +42,7 @@ public class GlobalExceptionHandler {
     public ResponseEntity<Map<String, String>> handleDuplicateEmail(
             DuplicateEmailException exception) {
 
-        Map<String, String> response = new HashMap<>();
+        Map<String, String> response = new LinkedHashMap<>();
 
         response.put("error", "Duplicate Email");
         response.put("message", exception.getMessage());

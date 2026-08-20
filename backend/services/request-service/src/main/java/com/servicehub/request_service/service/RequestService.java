@@ -163,7 +163,20 @@ public class RequestService {
 
     // Get provider details through Feign Client
     public ProviderResponse getProvider(Long providerId) {
-        return providerClient.getProviderById(providerId);
+        try {
+            ProviderResponse provider =
+                    providerClient.getProviderById(providerId);
+
+            if (provider == null) {
+                throw new ProviderNotFoundException(providerId);
+            }
+
+            return provider;
+
+        } catch (FeignException.NotFound exception) {
+
+            throw new ProviderNotFoundException(providerId);
+        }
     }
 
     // Get requests by customer
