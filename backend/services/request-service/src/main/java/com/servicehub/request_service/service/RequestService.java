@@ -36,7 +36,7 @@ public class RequestService {
     }
 
     // Update request
-    public Optional<ServiceRequest> updateRequest(
+    /*public Optional<ServiceRequest> updateRequest(
             String id,
             ServiceRequest request) {
 
@@ -49,6 +49,46 @@ public class RequestService {
                     existingRequest.setLocation(request.getLocation());
                     existingRequest.setStatus(request.getStatus());
                     existingRequest.setProviderId(request.getProviderId());
+
+                    return requestRepository.save(existingRequest);
+                });
+    }*/
+    public Optional<ServiceRequest> updateRequest(
+            String id,
+            ServiceRequest request) {
+
+        return requestRepository.findById(id)
+                .map(existingRequest -> {
+
+                    if (request.getCustomerId() != null &&
+                            !request.getCustomerId().isBlank()) {
+                        existingRequest.setCustomerId(request.getCustomerId());
+                    }
+
+                    if (request.getServiceType() != null &&
+                            !request.getServiceType().isBlank()) {
+                        existingRequest.setServiceType(request.getServiceType());
+                    }
+
+                    if (request.getDescription() != null &&
+                            !request.getDescription().isBlank()) {
+                        existingRequest.setDescription(request.getDescription());
+                    }
+
+                    if (request.getLocation() != null &&
+                            !request.getLocation().isBlank()) {
+                        existingRequest.setLocation(request.getLocation());
+                    }
+
+                    if (request.getStatus() != null &&
+                            !request.getStatus().isBlank()) {
+                        existingRequest.setStatus(request.getStatus());
+                    }
+
+                    if (request.getProviderId() != null &&
+                            !request.getProviderId().isBlank()) {
+                        existingRequest.setProviderId(request.getProviderId());
+                    }
 
                     return requestRepository.save(existingRequest);
                 });
