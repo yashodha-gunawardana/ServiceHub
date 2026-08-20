@@ -15,4 +15,6 @@ public interface ProviderRepository extends JpaRepository<Provider, Long> {
     List<Provider> findByLocation(String location);
 
     List<Provider> findByStatus(String status);
+
+    boolean existsByEmail(String email);
 }

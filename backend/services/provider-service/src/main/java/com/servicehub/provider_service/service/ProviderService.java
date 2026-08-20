@@ -2,6 +2,7 @@ package com.servicehub.provider_service.service;
 
 import com.servicehub.provider_service.entity.Provider;
 import com.servicehub.provider_service.repository.ProviderRepository;
+import com.servicehub.provider_service.exception.DuplicateEmailException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -28,7 +29,13 @@ public class ProviderService {
 
     // Create provider
     public Provider createProvider(Provider provider) {
-        if (provider.getStatus() == null || provider.getStatus().isBlank()) {
+        if (providerRepository.existsByEmail(provider.getEmail())) {
+            throw new DuplicateEmailException(provider.getEmail());
+        }
+
+        if (provider.getStatus() == null ||
+                provider.getStatus().isBlank()) {
+
             provider.setStatus("AVAILABLE");
         }
 

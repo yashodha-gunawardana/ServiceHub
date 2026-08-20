@@ -3,6 +3,7 @@ package com.servicehub.provider_service.controller;
 import com.servicehub.provider_service.entity.Provider;
 import com.servicehub.provider_service.service.ProviderService;
 import org.springframework.http.HttpStatus;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -47,7 +48,7 @@ public class ProviderController {
     // POST - Create provider
     @PostMapping
     public ResponseEntity<Provider> createProvider(
-            @RequestBody Provider provider) {
+            @Valid @RequestBody Provider provider) {
 
         Provider createdProvider =
                 providerService.createProvider(provider);
@@ -65,7 +66,7 @@ public class ProviderController {
     @PutMapping("/{id}")
     public ResponseEntity<Provider> updateProvider(
             @PathVariable Long id,
-            @RequestBody Provider provider) {
+            @Valid @RequestBody Provider provider) {
 
         return providerService.updateProvider(id, provider)
                 .map(updatedProvider -> ResponseEntity
