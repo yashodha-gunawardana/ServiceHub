@@ -3,6 +3,8 @@ package com.servicehub.request_service.service;
 import com.servicehub.request_service.client.ProviderClient;
 import com.servicehub.request_service.dto.ProviderResponse;
 import com.servicehub.request_service.entity.ServiceRequest;
+import feign.FeignException;
+import com.servicehub.request_service.exception.ProviderNotFoundException;
 import com.servicehub.request_service.repository.ServiceRequestRepository;
 import org.springframework.stereotype.Service;
 
@@ -50,13 +52,18 @@ public class RequestService {
             Long providerId =
                     Long.parseLong(request.getProviderId());
 
-            ProviderResponse provider =
+            try {
+
+                ProviderResponse provider =
                     providerClient.getProviderById(providerId);
 
-            if (provider == null) {
-                throw new RuntimeException(
-                        "Provider not found with ID: " + providerId
-                );
+                if (provider == null) {
+                    throw new ProviderNotFoundException(providerId);
+                }
+
+            } catch (FeignException.NotFound exception) {
+
+                throw new ProviderNotFoundException(providerId);
             }
         }
 
@@ -119,14 +126,18 @@ public class RequestService {
                                         request.getProviderId()
                                 );
 
-                        ProviderResponse provider =
-                                providerClient.getProviderById(providerId);
+                        try {
 
-                        if (provider == null) {
-                            throw new RuntimeException(
-                                    "Provider not found with ID: "
-                                            + providerId
-                            );
+                            ProviderResponse provider =
+                                    providerClient.getProviderById(providerId);
+
+                            if (provider == null) {
+                                throw new ProviderNotFoundException(providerId);
+                            }
+
+                        } catch (FeignException.NotFound exception) {
+
+                            throw new ProviderNotFoundException(providerId);
                         }
 
                         existingRequest.setProviderId(
