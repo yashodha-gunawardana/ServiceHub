@@ -67,7 +67,7 @@ public class RequestController {
     @PutMapping("/{id}")
     public ResponseEntity<ServiceRequest> updateRequest(
             @PathVariable String id,
-            @Valid @RequestBody ServiceRequest request) {
+            @RequestBody ServiceRequest request) {
 
         return requestService.updateRequest(id, request)
                 .map(updatedRequest -> ResponseEntity

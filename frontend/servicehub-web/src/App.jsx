@@ -7,6 +7,7 @@ import ProviderDashboard from "./pages/provider/ProviderDashboard";
 import AdminDashboard from "./pages/admin/AdminDashboard";
 import Providers from "./pages/customer/Providers";
 import RequestService from "./pages/customer/RequestService";
+import MyRequests from "./pages/customer/MyRequests";
 
 function App() {
   return (
@@ -37,6 +38,11 @@ function App() {
         <Route
           path="/customer/request-service"
           element={<RequestService />}
+        />
+
+        <Route
+          path="/customer/requests"
+          element={<MyRequests />}
         />
 
         <Route

@@ -42,7 +42,9 @@ function Register() {
 
     try {
       if (role === "CUSTOMER") {
-        // Customer registration
+        // =========================
+        // Customer Registration
+        // =========================
         await api.post("/api/users", {
           name: formData.name,
           email: formData.email,
@@ -50,7 +52,19 @@ function Register() {
           role: "CUSTOMER",
         });
       } else {
-        // Provider registration
+        // =========================
+        // Provider Registration
+        // =========================
+
+        // 1. Create provider login account
+        await api.post("/api/users", {
+          name: formData.name,
+          email: formData.email,
+          password: formData.password,
+          role: "PROVIDER",
+        });
+
+        // 2. Create provider profile
         await api.post("/api/providers", {
           name: formData.name,
           email: formData.email,
@@ -61,7 +75,9 @@ function Register() {
         });
       }
 
-      setSuccess("Registration successful! Redirecting to login...");
+      setSuccess(
+        "Registration successful! Redirecting to login..."
+      );
 
       setTimeout(() => {
         navigate("/login");
@@ -89,23 +105,36 @@ function Register() {
 
       <form onSubmit={handleSubmit}>
 
-        {/* Role */}
+        {/* =========================
+            Role
+        ========================= */}
         <div>
-          <label htmlFor="role">Register As</label>
+          <label htmlFor="role">
+            Register As
+          </label>
 
           <select
             id="role"
             value={role}
             onChange={handleRoleChange}
           >
-            <option value="CUSTOMER">Customer</option>
-            <option value="PROVIDER">Service Provider</option>
+            <option value="CUSTOMER">
+              Customer
+            </option>
+
+            <option value="PROVIDER">
+              Service Provider
+            </option>
           </select>
         </div>
 
-        {/* Name */}
+        {/* =========================
+            Name
+        ========================= */}
         <div>
-          <label htmlFor="name">Name</label>
+          <label htmlFor="name">
+            Name
+          </label>
 
           <input
             id="name"
@@ -118,9 +147,13 @@ function Register() {
           />
         </div>
 
-        {/* Email */}
+        {/* =========================
+            Email
+        ========================= */}
         <div>
-          <label htmlFor="email">Email</label>
+          <label htmlFor="email">
+            Email
+          </label>
 
           <input
             id="email"
@@ -133,28 +166,37 @@ function Register() {
           />
         </div>
 
-        {/* Customer Password */}
-        {role === "CUSTOMER" && (
-          <div>
-            <label htmlFor="password">Password</label>
+        {/* =========================
+            Password
+            One password field for
+            both Customer & Provider
+        ========================= */}
+        <div>
+          <label htmlFor="password">
+            Password
+          </label>
 
-            <input
-              id="password"
-              type="password"
-              name="password"
-              value={formData.password}
-              onChange={handleChange}
-              placeholder="Enter your password"
-              required
-            />
-          </div>
-        )}
+          <input
+            id="password"
+            type="password"
+            name="password"
+            value={formData.password}
+            onChange={handleChange}
+            placeholder="Enter your password"
+            required
+          />
+        </div>
 
-        {/* Provider Fields */}
+        {/* =========================
+            Provider Fields
+        ========================= */}
         {role === "PROVIDER" && (
           <>
+            {/* Phone */}
             <div>
-              <label htmlFor="phone">Phone</label>
+              <label htmlFor="phone">
+                Phone
+              </label>
 
               <input
                 id="phone"
@@ -167,8 +209,11 @@ function Register() {
               />
             </div>
 
+            {/* Service Type */}
             <div>
-              <label htmlFor="serviceType">Service Type</label>
+              <label htmlFor="serviceType">
+                Service Type
+              </label>
 
               <select
                 id="serviceType"
@@ -177,19 +222,45 @@ function Register() {
                 onChange={handleChange}
                 required
               >
-                <option value="">Select service</option>
-                <option value="PLUMBING">Plumbing</option>
-                <option value="ELECTRICAL">Electrical</option>
-                <option value="CLEANING">Cleaning</option>
-                <option value="AC_REPAIR">AC Repair</option>
-                <option value="CARPENTRY">Carpentry</option>
-                <option value="PAINTING">Painting</option>
-                <option value="GARDENING">Gardening</option>
+                <option value="">
+                  Select service
+                </option>
+
+                <option value="PLUMBING">
+                  Plumbing
+                </option>
+
+                <option value="ELECTRICAL">
+                  Electrical
+                </option>
+
+                <option value="CLEANING">
+                  Cleaning
+                </option>
+
+                <option value="AC_REPAIR">
+                  AC Repair
+                </option>
+
+                <option value="CARPENTRY">
+                  Carpentry
+                </option>
+
+                <option value="PAINTING">
+                  Painting
+                </option>
+
+                <option value="GARDENING">
+                  Gardening
+                </option>
               </select>
             </div>
 
+            {/* Location */}
             <div>
-              <label htmlFor="location">Location</label>
+              <label htmlFor="location">
+                Location
+              </label>
 
               <input
                 id="location"
@@ -204,7 +275,13 @@ function Register() {
           </>
         )}
 
-        <button type="submit" disabled={loading}>
+        {/* =========================
+            Submit
+        ========================= */}
+        <button
+          type="submit"
+          disabled={loading}
+        >
           {loading ? "Registering..." : "Register"}
         </button>
 
@@ -212,7 +289,10 @@ function Register() {
 
       <p>
         Already have an account?{" "}
-        <Link to="/login">Login</Link>
+
+        <Link to="/login">
+          Login
+        </Link>
       </p>
     </div>
   );
