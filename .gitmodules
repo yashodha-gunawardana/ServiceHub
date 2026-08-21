@@ -7,3 +7,6 @@
 [submodule "backend/platform/config-server"]
 	path = backend/platform/config-server
 	url = https://github.com/yashodha-gunawardana/config-server.git
+[submodule "backend/services/provider-service"]
+	path = backend/services/provider-service
+	url = https://github.com/yashodha-gunawardana/provider-service.git
