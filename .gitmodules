@@ -1,0 +1,9 @@
+[submodule "backend/platform/api-gateway"]
+	path = backend/platform/api-gateway
+	url = https://github.com/yashodha-gunawardana/api-gateway.git
+[submodule "backend/platform/eureka-server"]
+	path = backend/platform/eureka-server
+	url = https://github.com/yashodha-gunawardana/eureka-server.git
+[submodule "backend/platform/config-server"]
+	path = backend/platform/config-server
+	url = https://github.com/yashodha-gunawardana/config-server.git
